@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Menue extends Model
 {
     //
-    protected $table = "menue";
+    protected $table = "menues";
 
     public function has_food()
     {

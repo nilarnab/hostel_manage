@@ -62,10 +62,15 @@ Route::post('/change_menue', 'hostel_home_manage@update_menue');
 Route::post('/add_food', 'hostel_home_manage@add_food');
 Route::post('/delete_food', 'hostel_home_manage@delete_food');
 Route::post('/delete_timing', 'hostel_home_manage@delete_timing');
+Route::get('/update_profile', 'hostel_home_manage@update_profile_manage');
+Route::post('/update_profile_act', 'hostel_home_manage@update_profile');
+Route::post('/update_photo', 'hostel_home_manage@upload_photo');
 
 // route for ajax
 Route::get('/ajax_approve', 'hostel_home_manage@approve_hosteler');
 Route::get('/ajax_deny', 'hostel_home_manage@deny_hosteler');
+Route::get('/ajax_approval', 'hostel_home_manage@approval');
+Route::get('/ajax_room_approval', 'hostel_home_manage@room_approval');
 
 // route for testing purpose
 Route::get('/testing', function ()

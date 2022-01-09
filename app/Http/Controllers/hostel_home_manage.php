@@ -71,9 +71,110 @@ class hostel_home_manage extends Controller
         return view('change_room', ['all_rooms'=> $all_rooms]);
     }
 
+    function update_profile_manage()
+    {
+        /*
+         * Changes the personal information of the user of any role
+         *
+         */
+
+
+        return view('update_profile', ['user_data' => $user_data = Member::with('hosteler_room')->where('id', Auth::id())->get()[0]]);
+    }
+
 
     // HANDLING POST REQUEST
     // ___________________________________________________________________
+    public function upload_photo(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $imageName = Auth::id().'_'.Member::where('id', Auth::id())->get()[0]['name'].'.'.$request->image->extension();
+
+        $request->image->move(public_path('images'), $imageName);
+
+        /* Store $imageName name in DATABASE from HERE */
+        Member::where('id', Auth::id())->update(
+            [
+                'pic_name' => $imageName
+            ]
+        );
+
+        return back()
+            ->with('success','You have successfully upload image.')
+            ->with('image',$imageName);
+    }
+
+
+
+
+
+
+
+    function update_profile(Request $request)
+    {
+        /*
+         * Changes the personal information of the user of any role
+         *
+         */
+
+        $validated = $validated = $request->validate([
+            'name' => 'required',
+            'phone' => 'required'
+        ]);
+
+        $user_data = Member::with('hosteler_room')->where('id', Auth::id())->get()[0];
+
+        $email_val = '';
+
+        $emails = Member::where('email', $request['email'])->get();
+
+        if (sizeof($emails) == 0)
+        {
+
+        }
+        elseif (sizeof($emails) == 1)
+        {
+            // such a record already exists
+            // now if it is the same is current, we dont have problem
+
+            if ($emails[0]['email'] == $user_data['email'])
+            {
+                // ok
+            }
+            else
+            {
+                $email_val = 'This email id is already taken';
+            }
+        }
+        else
+        {
+            // it is not possible to have more than 1 emails
+            $email_val = 'Email taken by someone already';
+        }
+
+        if ($email_val != '')
+        {
+            return redirect()->back()->with('failure', $email_val);
+        }
+
+
+        Member::where('id', Auth::id())->update(
+            [
+                'name' => $request['name'],
+                'email' => $request['email'],
+                'phone' => $request['phone']
+            ]
+        );
+
+        return redirect()->back()->with('success', 'Data updated successfully');
+    }
+
+
+
+
     function change_profile(Request $request)
     {
 
@@ -205,7 +306,17 @@ class hostel_home_manage extends Controller
 
         $mx = max([$p, $q, $r]);
 
+        if ($mx == 0)
+        {
+            return [
+                '1' => [0, 0],
+                '2' => [0, 0],
+                '3' => [0, 0]
+            ];
+        }
+
         $x = 300 / $mx;
+
 
         return [
             '1' => [$p * $x, $p],
@@ -386,6 +497,7 @@ class hostel_home_manage extends Controller
                 'name' => $user['name'],
                 'email' => $user['email'],
                 'phone' => $user['phone'],
+                'is_allowed' => $user['is_allowed'],
                 $row['room_id'] = NULL,
                 $row['room_name'] = NULL
             ];
@@ -419,7 +531,7 @@ class hostel_home_manage extends Controller
 //        return $this->get_foods();
 
 //        return $this->get_dishes();
-
+//
         $mess_timings = $this->get_mess_timing();
 
         $timing_id_to_timing_name = [];
@@ -449,11 +561,11 @@ class hostel_home_manage extends Controller
 
         $timings = MessTiming::all();
 
+
         $total_data = [];
 
         foreach ($timings as $timing)
         {
-
             $menue = Menue::with('has_food')->where('time', $timing['id'])->get();
 
             $total_data[$timing['id']] = $menue;
@@ -491,7 +603,6 @@ class hostel_home_manage extends Controller
 
     public function update_menue(Request $request)
     {
-
 
         if ($request->has('meal_name', 'day', 'food_id'))
         {
@@ -601,6 +712,83 @@ class hostel_home_manage extends Controller
     public function get_foods()
     {
         return Food::all();
+    }
+
+    public function approval(Request $request)
+    {
+        Member::with('id', $request['id'])->update(
+            [
+                'is_allowed' => $request['action']
+            ]
+        );
+
+        if($request['action'] == 0)
+        {
+
+            Room::where('taken_by', $request['id'])->update(
+                [
+                    'taken_by' => NULL,
+                    'status' => 1
+                ]
+            );
+
+
+        }
+
+        return ["result" => 'success'];
+
+    }
+
+    public function room_approval(Request $request)
+    {
+
+
+        if ($request['action'] == 1)
+        {
+            Room::where('id', $request['id'])->update(
+                [
+                    'status' => 1
+                ]
+            );
+            return ["result" => 'success'];
+        }
+
+        else
+        {
+
+            // maybe the room is already taken
+            // we cannot disapprove if the room is taken
+
+            $room_info = Room::where('id', $request['id'])->get()[0];
+
+            if($room_info['status'] == 2)
+            {
+                // it is already taken by someone
+
+                // finding if the user is still allowed
+
+                $user = Member::where('id', $room_info['taken_by'])->get()[0];
+
+                if ($user['is_allowed'])
+                {
+                    // the user is authentic
+                    return ['result' => 'failed', 'message' => 'Room already taken'];
+                }
+
+            }
+
+            // we are free to change room status
+            Room::where('id', $request['id'])->update(
+                [
+                    'status' => 3
+                ]
+            );
+            return ["result" => 'success'];
+
+        }
+
+
+
     }
 
     /* END */

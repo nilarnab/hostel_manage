@@ -105,7 +105,7 @@
 
 <!--    NAV LAYOUT-->
 <div id="rc_logo">
-    <a href="#home" title="Logo">LOGO</a> <!-- Swap this placeholder out for your logo image -->
+    <a href="#home" title="Logo">HostelManager</a> <!-- Swap this placeholder out for your logo image -->
 </div>
 
 <div class="rc_nav text" id="centered_nav">

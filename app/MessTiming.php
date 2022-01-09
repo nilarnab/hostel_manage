@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class MessTiming extends Model
 {
     //
-    protected $table = 'mess_timing';
+    protected $table = 'timings';
 
 
 }
