@@ -7,6 +7,15 @@
 
 @section('main')
 
+    <style>
+
+        option>p
+        {
+            color: #818181;
+        }
+
+    </style>
+
     <div class="row">
         <div class="col-xs-12 col-md-6">
             {{--    mess timings--}}
@@ -211,11 +220,11 @@
                             <div id="food_name">
 
                                 <p>Choose the new food</p>
-                                <select class="form-select form-select-lg" style="width: 100%" name="food_id">
+                                <select class="form-select form-select-lg" style="width: 100%; color: #5f5f5f;" name="food_id">
                                 @foreach($foods as $food)
 
 
-                                            <option value="{{$food['id']}}"><p>{{$food['name']}}</p></option>
+                                            <option value="{{$food['id']}}"><p style="color: #1b4b72 !important;">{{$food['name']}}</p></option>
 
 
                                 @endforeach
@@ -256,7 +265,7 @@
                     <h3 class="text" style="text-align: center">Delete A food Item</h3>
                     <div id="food_name">
                         <p>Choose the new food</p>
-                        <select class="form-select form-select-lg" style="width: 100%" name="food_id">
+                        <select class="form-select form-select-lg" style="width: 100%; color: #5f5f5f;" name="food_id">
                             @foreach($foods as $food)
                                 <option value="{{$food['id']}}"><p>{{$food['name']}}</p></option>
                             @endforeach

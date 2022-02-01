@@ -1,5 +1,11 @@
 @extends('layouts.general')
 
+@extends('layouts.navmid')
+
+
+@section('post_nav')
+@endsection
+
 
 
 @section('main')
@@ -13,7 +19,7 @@
     <br><br>
 {{--    if there is already one request, there cannot be more request--}}
 
-    <table class="table table-hover">
+    <table id="table" class="table table-hover">
 
         <thead>
             <tr>
@@ -26,18 +32,18 @@
         <tbody>
             @foreach($all_rooms as $room)
             <tr>
-                <td>{{$room->id}}</td>
-                <td>{{$room->name}}</td>
+                <td id="col1">{{$room->id}}</td>
+                <td id="col2">{{$room->name}}</td>
                 @if($room->status == 1)
-                    <td class="success">Available</td>
+                    <td id="col3" class="success">Available</td>
                 @elseif($room->status == 2)
-                    <td>Already taken by {{$room->taken_by}}</td>
+                    <td id="col3">Already taken by {{$room->taken_by}}</td>
                 @elseif($room->status == 3)
-                    <td class="red">Unsable</td>
+                    <td id="col3" class="red">Unsable</td>
                 @elseif($room->status == 4)
-                    <td>requested</td>
+                    <td id="col3">requested</td>
                 @else
-                    <td>unanticipated status</td>
+                    <td id="col3">unanticipated status</td>
                 @endif
             </tr>
             @endforeach
@@ -54,6 +60,8 @@
         <button class="btn btn-success" name="submit">Submit</button>
     </form>
 
+    <br>
+
     @if (Session::has('success'))
         <div class="alert alert-success">
             <ul>
@@ -69,6 +77,29 @@
             </ul>
         </div>
     @endif
+
+    <script>
+
+        night = 0;
+
+        function toggle() {
+            document.getElementById("body").classList.toggle("dark");
+            document.getElementById("table").classList.toggle("table_dark");
+
+            night = 1 ^ night;
+
+            if(!night)
+            {
+                document.getElementById("toogle_button").innerHTML = '<i class="far fa-moon"></i>'
+            }
+            else
+            {
+                document.getElementById("toogle_button").innerHTML = '<i class="fas fa-sun"></i>'
+            }
+
+
+        }
+    </script>
 
 
 

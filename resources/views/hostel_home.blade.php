@@ -159,7 +159,7 @@
                     <p>
                         You can mail a grievance and it will be broadcasted to all the care takers
                     </p>
-                    <p><a href="./">Link to mailing</a></p>
+                    <p><a href="./mailer">Link to mailing</a></p>
                 </div>
                 <div id="card3" class="holders cards border col-xs-8 col-md-3" data-aos="fade-up">
                     <h2>
@@ -179,6 +179,9 @@
         <br><br>
 
         <script>
+
+            var night = 0;
+
             function toggle() {
                 document.getElementById("body").classList.toggle("dark");
                 document.getElementById("elevate").classList.toggle("dark_oval");
@@ -205,6 +208,7 @@
 
 
             }
+
         </script>
     @else
         <h2 class="red" align="center">Oh No!</h2>

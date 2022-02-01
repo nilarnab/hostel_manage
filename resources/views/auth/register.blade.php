@@ -61,13 +61,18 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Add role</label>
 
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="number" class="form-control" name=role>
-                            </div>
-                        </div>
+                        @auth
+                            @if(\Illuminate\Support\Facades\Auth::user()->role == 2)
+                                <div class="form-group row">
+                                    <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Add role</label>
+
+                                    <div class="col-md-6">
+                                        <input id="password-confirm" type="number" class="form-control" name=role>
+                                    </div>
+                                </div>
+                            @endif
+                        @endauth
 
                         <div class="form-group row">
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-right">add phone number</label>

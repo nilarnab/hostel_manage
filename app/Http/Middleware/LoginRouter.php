@@ -37,6 +37,10 @@ class LoginRouter
 
             return redirect('/mess_secretary');
         }
+        else
+        {
+            return redirect('/mailer');
+        }
 
 
     }

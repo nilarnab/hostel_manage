@@ -29,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = './register';
 
     /**
      * Create a new controller instance.
@@ -64,7 +64,11 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-
+        if(!array_key_exists('role', $data))
+        {
+            // in case there is no role, it means only hosteler access is allowed
+            $data['role'] = 1;
+        }
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],

@@ -14,7 +14,7 @@
 
     <div class="row">
         <div class="holders col-xs-12 col-md-6">
-            <div class="request_num">
+            <div id="card1" class="request_num">
                 <div id="pending_requests">
                     <h2 id="pending_num" class="gradient_warning">{{$num_pending_request}}</h2>
                 </div>
@@ -22,7 +22,7 @@
 
             </div>
 
-            <div class="users_number">
+            <div id="card2" class="users_number">
                 <p class="gradient_success">{{$users_num}}</p>
                 <h3 class="text">Hostelers</h3>
 
@@ -40,17 +40,17 @@
 
 
                 <div class="row bar_holder">
-                    <div class="bars bar_1 col-3" style="height: {{$rooms_status['3'][0]}}px; " data-aos="fade-down">
+                    <div id="bar1" class="bars bar_1 col-3" style="height: {{$rooms_status['3'][0]}}px; " data-aos="fade-down">
 
                     </div>
                     <div class="col-1">
                     </div>
-                    <div class="bars bar_2 col-3" style="height: {{$rooms_status['2'][0]}}px;" data-aos="fade-down">
+                    <div id="bar2" class="bars bar_2 col-3" style="height: {{$rooms_status['2'][0]}}px;" data-aos="fade-down">
                     </div>
                     <div class="col-1">
 
                     </div>
-                    <div class="bars bar_3 col-3" style="height: {{$rooms_status['1'][0]}}px; " data-aos="fade-down">
+                    <div id="bar3" class="bars bar_3 col-3" style="height: {{$rooms_status['1'][0]}}px; " data-aos="fade-down">
                     </div>
                     <div class="col-1">
 
@@ -82,11 +82,7 @@
                     </div>
                     <div class="col-1"></div>
                 </div>
-
-
             </div>
-
-
         </div>
 
     </div>
@@ -98,10 +94,10 @@
     <div class="row">
         <div class="col-xs-12 col-md-4">
             {{--    mess timings--}}
-            <div class="mess_timing">
+            <div id="card3" class="mess_timing">
                 <h3 class="text">Mess Timings</h3>
 
-                <table class="table table-hover">
+                <table id="table1" class="table table-hover">
 
                     <thead>
                     <tr>
@@ -133,10 +129,10 @@
         </div>
         <div class="col-xs-12 col-md-8">
             {{--   Requests--}}
-            <div class="requests">
-                <h3 class="text">Request Information</h3>
+            <div id="card4" class="requests">
+                <h3 class="text">Room Request Information</h3>
 
-                <table class="table table-hover">
+                <table id="table2" class="table table-hover">
 
                     <thead>
                         <tr>
@@ -171,7 +167,7 @@
                     </tbody>
 
                 </table>
-                @if($num_pending_request == 0)
+                @if($pending_room_reqs == 0)
                     <div style="width: auto; text-align: center">
                         <br><br>
                         <p>No pending requests. All caught up!</p>
@@ -187,10 +183,10 @@
 
 
 {{--   personal infos--}}
-    <div class="personal_infos">
+    <div id="card5" class="personal_infos">
         <h3 class="text">Hosteler's info </h3>
 
-        <table class="table table-hover">
+        <table id="table3" class="table table-hover">
 
             <thead>
             <tr>
@@ -205,7 +201,6 @@
 
             <tbody>
             @foreach($users as $user)
-
 
                     <tr id="approval{{$user['id']}}">
                         <td>{{$user["sl_no"]}}</td>
@@ -234,10 +229,21 @@
     </div>
     <br>
 
-    <div class="personal_infos">
+    <div id="card6" class="personal_infos">
         <h3 class="text">Room Details</h3>
+        @if (Session::has('success_room'))
+            <p class="success" align="center">{!! Session::get('success_room') !!}</p>
+        @endif
 
-        <table class="table table-hover">
+        @if ($errors->any())
+            <ul class="red" align="center">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        @endif
+
+        <table id="table4" class="table table-hover">
 
             <thead>
             <tr>
@@ -259,11 +265,11 @@
                     @if($room['status_id'] == 1)
                         <td class="success">Available</td>
                     @elseif($room['status_id'] == 2)
-                        <td>Already taken by {{$room['user_name']}}</td>
+                        <td style="background-color: #ffb547">Already taken by {{$room['user_name']}}</td>
                     @elseif($room['status_id'] == 3)
-                        <td class="red">Unsable</td>
+                        <td class="red" style="background-color: tomato; color: white">Unsable</td>
                     @elseif($room['status_id'] == 4)
-                        <td>requested</td>
+                        <td style="background-color: yellow">requested</td>
                     @else
                         <td>unanticipated status</td>
                     @endif
@@ -275,10 +281,30 @@
                     @endif
                 </tr>
 
-
             @endforeach
+
+            <form method="post" action="/create_room">
+                @csrf
+                <tr>
+                    <td>
+                        New Room
+                    </td>
+                    <td>
+                        <input class="form-control" name="name">
+                    </td>
+                    <td>
+                        Status will be available
+                    </td>
+                    <td>
+                        <button class="btn btn-success">Create</button>
+                    </td>
+                </tr>
+            </form>
             </tbody>
         </table>
+        <br>
+
+
 
     </div>
 
@@ -442,20 +468,31 @@
             window .location.reload();
         }
 
+
+
     </script>
 
     <script>
+
+        var night = 0;
+
         function toggle() {
             document.getElementById("body").classList.toggle("dark");
-            // document.getElementById("elevate").classList.toggle("dark_oval");
-            // document.getElementById("card1").classList.toggle("dark_oval");
-            // document.getElementById("card2").classList.toggle("dark_oval");
-            // document.getElementById("card3").classList.toggle("dark_oval");
-            // document.getElementById("graphs").classList.toggle("dark_oval");
+            document.getElementById("graphs").classList.toggle("dark_oval");
+            document.getElementById("card1").classList.toggle("dark_oval");
+            document.getElementById("card2").classList.toggle("dark_oval");
+            document.getElementById("card3").classList.toggle("dark_oval");
+            document.getElementById("card4").classList.toggle("dark_oval");
+            document.getElementById("card5").classList.toggle("dark_oval");
+            document.getElementById("card6").classList.toggle("dark_oval");
+            document.getElementById("table1").classList.toggle("table_dark");
+            document.getElementById("table2").classList.toggle("table_dark");
+            document.getElementById("table3").classList.toggle("table_dark");
+            document.getElementById("table4").classList.toggle("table_dark");
             // document.getElementById("status").classList.toggle("dark_oval");
-            // document.getElementById("bar1").classList.toggle("shadow_less");
-            // document.getElementById("bar2").classList.toggle("shadow_less");
-            // document.getElementById("bar3").classList.toggle("shadow_less");
+            document.getElementById("bar1").classList.toggle("shadow_less");
+            document.getElementById("bar2").classList.toggle("shadow_less");
+            document.getElementById("bar3").classList.toggle("shadow_less");
 
 
             night = 1 ^ night;

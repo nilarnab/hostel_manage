@@ -1,93 +1,99 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="en">
 
-        <title>Hostel Manager</title>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Roboto+Mono:wght@100&display=swap"
+        rel="stylesheet">
+    <title>Hostel Manager</title>
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
 
-            .full-height {
-                height: 100vh;
-            }
+    <style>
+    html,
+    body {
+        height: 100%;
+        padding: 0px;
+        margin: 0px;
+        background-color: rgb(216, 216, 216);
+        color: rgb(22, 22, 22);
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+    }
 
-            .position-ref {
-                position: relative;
-            }
+    .big_card {
+        height: 80%;
+        position: absolute;
+        left: 10%;
+        top: 5%;
+        width: 80%;
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
+        padding: 40px;
+        border-radius: 20px;
+        font-family: 'Indie Flower', cursive;
+    }
 
-            .content {
-                text-align: center;
-            }
+    .big_heading {
 
-            .title {
-                font-size: 84px;
-            }
+        font-size: 155px;
+        text-align: center;
+    }
 
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
+    .line {
+        width: 80%;
+        height: 2px;
+        border-radius: 50%;
+        background-color: rgb(22, 22, 22);
+        margin: auto;
+    }
 
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
+    .links {
+        justify-content: center;
+        margin: auto;
+        text-align: center;
+        font-size: 40px;
+    }
 
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
+    .login {
+        margin-right: 200px;
+    }
 
-            <div class="content">
-                <div class="title m-b-md">
-                    Hostel Manager
-                </div>
+    a {
+        color: rgb(22, 22, 22);
+    }
 
-                <div class="links">
+    a:hover {
+        color: black;
+        text-decoration: underline;
+        text-shadow: 0px 0px 20px white;
+    }
 
-                </div>
-            </div>
+    a:link {
+        text-decoration: none;
+    }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="big_card">
+        <div class="big_heading">
+            Hostel<br>Manager
         </div>
-    </body>
+        <br>
+        <div class="line"></div>
+        <br>
+        <div class="links">
+            <span class="login"><a href="./login">Login</a> </span><span class="register"><a
+                    href="./register">register</a></span>
+        </div>
+
+    </div>
+
+</body>
+
 </html>

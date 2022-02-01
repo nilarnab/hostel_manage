@@ -30,6 +30,15 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+    <!-- include libraries(jQuery, bootstrap) -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!-- include summernote css/js -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
     <style>
 
         *
@@ -67,7 +76,7 @@
         .cont {
             width: 90%;
             margin: auto;
-            padding-top: 50px;
+            padding-top: 0px;
         }
 
         .holders {
@@ -107,6 +116,7 @@
             padding-left: 11px;
             height: 440px !important;
             border-radius: 20px;
+            margin-top: 20px;
         }
 
         .graph:hover {
@@ -126,27 +136,6 @@
             box-shadow: -20px -20px 25px #757575;
         }
 
-        .bar_1 {
-            /*background: linear-gradient(90deg, rgb(4, 28, 136), rgb(71, 157, 255));*/
-
-            animation-name: bar_1;
-            animation-duration: 2s;
-            animation-iteration-count: 1;
-        }
-
-        .bar_2 {
-            /*background: linear-gradient(90deg, rgb(4, 28, 136), rgb(71, 157, 255));*/
-            animation-name: bar_2;
-            animation-duration: 2s;
-            animation-iteration-count: 1;
-        }
-
-        .bar_3 {
-            /*background: linear-gradient(90deg, rgb(4, 28, 136), rgb(71, 157, 255));*/
-            animation-name: bar_3;
-            animation-duration: 2s;
-            animation-iteration-count: 1;
-        }
 
         .row {
             height: auto;
@@ -176,6 +165,7 @@
         .cards {
             margin-left: 48px;
             margin-right: 48px;
+            margin-bottom: 20px;
             background: linear-gradient(white, #cac9c9);
             box-shadow: 4px 4px 15px #919191,
             -4px -4px 10px #ffffff;
@@ -276,12 +266,37 @@
             padding-top: 22px !important;
         }
 
+        .table_dark
+        {
+            color: #ababab !important;
+            background-color: rgba(0, 0, 0, 0) !important;
+        }
+
 
         .success
         {
             font-weight: bold;
             color: darkgreen;
         }
+
+        .bright_font
+        {
+            color: #888888 !important;
+        }
+
+        .dark_succ
+        {
+            color: white;
+            background-color: #04451f;
+        }
+
+        .dark
+        {
+            background-color: #3c3c3c !important;
+            color: #888888 !important;
+        }
+
+
 
         .red
         {
