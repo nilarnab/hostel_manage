@@ -22,7 +22,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth', 'loginRoute');
 
-
 /* HOSTELERS PAGE ROUTEs
 _____________________________________________________________*/
 

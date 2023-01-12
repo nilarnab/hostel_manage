@@ -874,6 +874,21 @@ class hostel_home_manage extends Controller
         foreach ($timings as $timing)
         {
             $menue = Menue::with('has_food')->where('time', $timing['id'])->get();
+            // $menue = Menue::where('time', $some_data)->get()
+
+            /*
+             * [
+             *  [id: 1, food_id: , time: , day: , has_food:
+             *      [
+             *          id:
+             *          name: chicken nuggets,
+             *
+             *
+             * ]
+             *  ]
+             * ]
+             *
+             */
 
             $total_data[$timing['id']] = $menue;
 
